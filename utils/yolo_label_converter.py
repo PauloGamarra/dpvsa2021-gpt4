@@ -37,16 +37,10 @@ def convert_labels_to_yolo_format(file_path):
             shape['points'][0][1] = yc
             shape['points'][1][0] = norm_w
             shape['points'][1][1] = norm_h
-            print(f'Id: {shape_id}')
-            print(f'Points: ({x1}, {y1}), ({x2}, {y2})')
-            print(f'Dimensions: {shape_width} x {shape_height}')
-            print(f'Normalized dimensions: {norm_w} x {norm_h}')
-            print(f'Center: ({xc}, {yc})')
-            print(f'New shape: {shape['points']}')
-            break
             
 
 def create_yolo_dataset(SOURCE_DATASET_DIR, DESTINATION_DATASET_DIR):
+
     for i, game in enumerate(os.listdir(SOURCE_DATASET_DIR)):
     
         print(f'Converting game {i} ...')
@@ -63,10 +57,7 @@ def create_yolo_dataset(SOURCE_DATASET_DIR, DESTINATION_DATASET_DIR):
         
             if source.endswith('.json'):
                 convert_labels_to_yolo_format(source)
-            else:
-                pass
-                #shutil.copy(source, destination)
-            break
-        break
-    
+                
+            shutil.copy(source, destination)
+            
     print('All files converted successfully')

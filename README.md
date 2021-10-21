@@ -8,7 +8,7 @@ In this project we have four main goals: team recognition, ball tracking, refere
 ## Running the model
 
 ## Dataset
-To train our machine learning models and validate the metrics we use an augmented DPVSA Dataset version. We used rotations between -11 and +11 degrees, horizontal flip, Hue between -37 and +37 degrees, brightness between -34% and +34%, exposure between -18% and +18%, blur up to 1px, noise up to 3% of pixels .
+To train our machine learning models and validate the metrics we use an augmented DPVSA Dataset version. We used rotations between -11 and +11 degrees, horizontal flip, Hue between -37 and +37 degrees, brightness between -34% and +34%, exposure between -18% and +18%, blur up to 1px .
 
 ## Approach
 

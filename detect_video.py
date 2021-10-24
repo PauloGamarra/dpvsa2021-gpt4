@@ -66,7 +66,7 @@ def detect_video(args=None):
     bboxes['rgb_average'] = None
     
     for idx, bbox in bboxes.iterrows():
-      if bbox['name'] == 'person':
+      if bbox['name'] == 'person' or bbox['name'] == 'player':
           x1, x2, y1, y2 = int(bbox['xmin']), int(bbox['xmax']), int(bbox['ymin']), int(bbox['ymax'])
           cropped_image = frame[y1:y2, x1:x2]
           bboxes.at[idx,'cropped_image'] = cropped_image
@@ -76,19 +76,19 @@ def detect_video(args=None):
     if not kmeans_trained and 'player' in list(bbox['name']):
       # cluster feature vectors
       kmeans = KMeans(n_clusters=2, random_state=22)
-      avg = np.vstack(list(bboxes.loc[bboxes['name'] == 'person']['rgb_average']))
+      avg = np.vstack(list(bboxes.loc[(bboxes['name'] == 'person') | (bboxes['name'] == 'player'))
       kmeans.fit(avg)
       kmeans_trained = True
 
     # Using k-mean model to cluster detected players in 2 groups
     bboxes['kmeans_result'] = None
     for idx, bbox in bboxes.iterrows():
-      if bbox['name'] == 'person':
+      if bbox['name'] == 'person' or bbox['name'] == 'player':
           bboxes.at[idx,'kmeans_result'] = kmeans.predict([bbox['rgb_average']])[0]
     
     # Drawing bounding boxes and predicted labesl on frame
     for idx, bbox in bboxes.iterrows():
-      if bbox['name'] == 'person':
+      if bbox['name'] == 'person' or bbox['name'] == 'player':
         if bbox['kmeans_result'] == 0:
           bbox['name'] = 'player_team_1'
         if bbox['kmeans_result'] == 1:

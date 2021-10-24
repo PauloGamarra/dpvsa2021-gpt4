@@ -20,15 +20,15 @@ The following image is a sample from the DPVSA dataset.
 ![Screenshot from 2021-10-23 21-51-22](https://user-images.githubusercontent.com/49798588/138575735-3c60d42e-6a05-4cf1-aea4-f0d17e25ee11.png)
 
 ## Approach
-We divide the task into 2 different segments: object detection (including players, ball, referees and outsiders) and players clustering. Firstly we preprocess the dataset to obtain the data to train the model. After that, loading [YOLOv5s](https://github.com/ultralytics/yolov5) model and training it from scratch based on the dataset classes mentioned in the alst section. We perform objetc detection using the model to get all the bounding boxes predictions and the confidence score for each class. 
+We divide the task into 2 different segments: object detection (including players, ball, referees and outsiders) and players clustering. First, we preprocess the dataset to obtain the data to train the model. After that, loading [YOLOv5s](https://github.com/ultralytics/yolov5) model and training it from scratch, using the dataset classes mentioned in the last section. We perform object detection using the model to get all the bounding boxes predictions and the confidence score for each class. 
 
-As soon as the first segment is done, we have our object detection approach done. The next step is divide the players by team. For that, we use the clustering technique through K-means algorithm. We calculate the RGB average per channel for each predicted player bounding box and we classify this image in two different classes: 'player_team_1' and 'player_team_2'.
+As soon as the first segment is done, we have our object detection approach done. The next step is to divide the players by team. We use the clustering technique through K-means algorithm. We calculate the RGB average per channel for each predicted player bounding box and we classify this image in two different clusters: 'player_team_1' and 'player_team_2'.
 
 ![diagram1](https://user-images.githubusercontent.com/49798588/138575649-7e641f96-0f45-418d-be4c-5601d41e8d0e.jpg)
 
 
 ## Results
-To evaluate our model we focused on two different metrics and three different losses during both training and validation steps. The following image shows the results during the training and valitation when the model YOLOv5s is trained by 100 epochs.
+To evaluate our model we focused on two different metrics and three different losses during both training and validation steps. The following image shows the results during the training and valitation during 100 epochs.
 
 ![results](https://user-images.githubusercontent.com/49798588/138575042-e520e62b-3f9b-4d5a-87f7-b4c0ad8c32f0.png)
 

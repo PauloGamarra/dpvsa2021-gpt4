@@ -18,10 +18,10 @@ class_to_color = {'ball': (255, 0, 255),
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=str, help='input video path')
+    parser.add_argument('--source', type=str, help='input video path', required=True)
     parser.add_argument('--output', default = 'output_video.mp4', type=str, help='output video path')
     parser.add_argument('--yolo_repo', default='./yolov5', type=str, help='yolov5 repository path')
-    parser.add_argument('--model_weights', default='/weights/dpvsa_detector.pt', type=str, help='output video path')
+    parser.add_argument('--model_weights', default='./weights/dpvsa_detector.pt', type=str, help='output video path')
 
     args = parser.parse_args()
     
@@ -110,5 +110,5 @@ def main():
   args = parse_opt()
   detect_video(args)
 
-if __name__ == 'main':
+if __name__ == '__main__':
   main()

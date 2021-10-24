@@ -24,7 +24,7 @@ We divide the task into 2 different segments: object detection (including player
 
 As soon as the first segment is done, we have our object detection approach done. The next step is to divide the players by team. We use the clustering technique through K-means algorithm. We calculate the RGB average per channel for each predicted player bounding box and we classify this image in two different clusters: 'player_team_1' and 'player_team_2'.
 
-![diagram1](https://user-images.githubusercontent.com/49798588/138575649-7e641f96-0f45-418d-be4c-5601d41e8d0e.jpg)
+![Untitled Diagram drawio (1)](https://user-images.githubusercontent.com/49798588/138604540-e12845d6-2033-4551-9626-0cc1233e5ca2.png)
 
 
 ## Results

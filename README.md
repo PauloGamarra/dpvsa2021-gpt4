@@ -17,6 +17,7 @@ To train our machine learning models and validate the metrics we use an augmente
 The original dataset is divided into different classes: ball, player_team_1, player_team_2, goalkeeper_team_1, goalkeeper_team_2, referee and outsider.To feed our model we replaced few base classes into a small subset. Our preprocessed dataset is splitted into ball, player, referee and outsider.
 
 The following image is a sample from the DPVSA dataset.
+
 ![Screenshot from 2021-10-23 21-51-22](https://user-images.githubusercontent.com/49798588/138575735-3c60d42e-6a05-4cf1-aea4-f0d17e25ee11.png)
 
 ## Approach

@@ -43,6 +43,8 @@ def detect_video(args=None):
   # Loading pytorch object detector model
   model = torch.hub.load(args.yolo_repo, 'custom', path=args.model_weights, source='local') 
 
+  # Initializing kmeans trained flag
+  kmeans_trained = False
 
   # Processing each frame with our pipeline
   print("Processing frames...")
@@ -71,11 +73,12 @@ def detect_video(args=None):
           bboxes.at[idx,'rgb_average'] = cropped_image.mean(axis=0).mean(axis=0)
 
     # On the first frame, use the player patches to train a k-means model
-    if i == 0:
+    if not kmeans_trained and 'player' in list(bbox['name']):
       # cluster feature vectors
       kmeans = KMeans(n_clusters=2, random_state=22)
       avg = np.vstack(list(bboxes.loc[bboxes['name'] == 'person']['rgb_average']))
       kmeans.fit(avg)
+      kmeans_trained = True
 
     # Using k-mean model to cluster detected players in 2 groups
     bboxes['kmeans_result'] = None

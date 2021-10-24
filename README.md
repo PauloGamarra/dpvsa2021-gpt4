@@ -1,4 +1,4 @@
-# Computer Vision Challenge: Soccer Match Monitoring” at the IEEE DPVSA 2021 - GPT4
+# Computer Vision Challenge: Soccer Match Monitoring” at the IEEE DPVSA 2021 - Team GPT4
 
 ![WhatsApp-Video-2021-10-23-at-21 31 20](https://user-images.githubusercontent.com/49798588/138575391-898fc3a0-1fce-45d7-8148-43a44a5c38ae.gif)
 

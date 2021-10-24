@@ -6,7 +6,7 @@
 Implementation of a soccer match monitoring system for the “Computer Vision Challenge: Soccer Match Monitoring” at the IEEE DPVSA 2021.
 The team is formed by CS undergraduate students at Federal University Of Rio Grande Do Sul (UFRGS), Paulo Gamarra Lessa Pinto, Thiago Sotoriva Lermen and Gabriel Couto Domingues mentored by the Professor Claudio Rosito Jung, PhD. 
 
-In this project we have four main goals: team recognition, ball tracking, referee tracking and player tracking. To solve this, we use classic computer vision techniques and machine learning.
+In this project we have four main goals: team recognition, ball tracking, referee tracking and player tracking. For this task, we use classic computer vision techniques and machine learning.
 
 ## Running the model
 

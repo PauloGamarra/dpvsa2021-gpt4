@@ -22,6 +22,7 @@ def parse_opt():
     parser.add_argument('--output', default = 'output_video.mp4', type=str, help='output video path')
     parser.add_argument('--yolo_repo', default='./yolov5', type=str, help='yolov5 repository path')
     parser.add_argument('--model_weights', default='./weights/dpvsa_detector.pt', type=str, help='output video path')
+    parser.add_argument('--imsz', default=640, type=int, help='model image input size')
 
     args = parser.parse_args()
     
@@ -31,6 +32,7 @@ def parse_opt():
 def detect_video(args=None):
 
   # Initilizing video caputure and writing objects
+  print("loading video input from {}".format(args.source))
   video = cv2.VideoCapture(args.source)
 
   length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -38,14 +40,18 @@ def detect_video(args=None):
   height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
   fps    = video.get(cv2.CAP_PROP_FPS)
 
+  print("writing video output to {}".format(args.output))
   video_writer = cv2.VideoWriter(args.output, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
   # Loading pytorch object detector model
+  print("loading model weights from {}".format(args.model_weights))
   model = torch.hub.load(args.yolo_repo, 'custom', path=args.model_weights, source='local') 
 
   # Initializing kmeans trained flag
   kmeans_trained = False
 
+
+  print("using {} as model image input size".format(args.imsz))
   # Processing each frame with our pipeline
   print("Processing frames...")
   for i in tqdm(range(length)):
@@ -57,7 +63,7 @@ def detect_video(args=None):
 
     # Getting object bounding boxes with yoloV5s 
     with torch.no_grad():
-      pred = model(frame)
+      pred = model(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB), args.imsz)
 
     bboxes = pred.pandas().xyxy[0].copy()
 
@@ -73,10 +79,10 @@ def detect_video(args=None):
           bboxes.at[idx,'rgb_average'] = cropped_image.mean(axis=0).mean(axis=0)
 
     # On the first frame, use the player patches to train a k-means model
-    if not kmeans_trained and 'player' in list(bbox['name']):
+    if not kmeans_trained and ('player' in list(bboxes['name']) or 'person' in list(bboxes['name'])):
       # cluster feature vectors
       kmeans = KMeans(n_clusters=2, random_state=22)
-      avg = np.vstack(list(bboxes.loc[(bboxes['name'] == 'person') | (bboxes['name'] == 'player'))
+      avg = np.vstack(list(bboxes.loc[(bboxes['name'] == 'person') | (bboxes['name'] == 'player')]['rgb_average']))
       kmeans.fit(avg)
       kmeans_trained = True
 
@@ -84,7 +90,7 @@ def detect_video(args=None):
     bboxes['kmeans_result'] = None
     for idx, bbox in bboxes.iterrows():
       if bbox['name'] == 'person' or bbox['name'] == 'player':
-          bboxes.at[idx,'kmeans_result'] = kmeans.predict([bbox['rgb_average']])[0]
+        bboxes.at[idx,'kmeans_result'] = kmeans.predict([bbox['rgb_average']])[0]
     
     # Drawing bounding boxes and predicted labesl on frame
     for idx, bbox in bboxes.iterrows():

@@ -20,11 +20,11 @@ The original dataset is divided into different classes: ball, player_team_1, pla
 The following image is a sample from the DPVSA dataset.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/49798588/138575735-3c60d42e-6a05-4cf1-aea4-f0d17e25ee11.png" width="80%">
+  <img src="https://user-images.githubusercontent.com/49798588/138706232-0f190bba-89b6-4afb-b25b-ca6ddfbe987b.jpeg" width="80%">
 </p>
 
-
 ## Approach
+
 We divide the task into 2 different segments: object detection (including players, ball, referees and outsiders) and players clustering. First, we preprocess the dataset to obtain the data to train the model. After that, loading [YOLOv5s](https://github.com/ultralytics/yolov5) model and training it from scratch, using the dataset classes mentioned in the last section. We perform object detection using the model to get all the bounding boxes predictions and the confidence score for each class. 
 
 As soon as the first segment is done, we have our object detection approach done. The next step is to divide the players by team. We use the clustering technique through K-means algorithm. We calculate the RGB average per channel for each predicted player bounding box and we classify this image in two different clusters: 'player_team_1' and 'player_team_2'.

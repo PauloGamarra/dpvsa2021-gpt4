@@ -21,7 +21,17 @@ The develpment process was using the Google Colab's environment. Therefore, our 
 
 Using the link above you can read and execute the code, but if you want to run some tests or edit the code, you should copy the colab notebook to you own environment, for example Google Drive. Inside the Colab's envirment you can find other tips and specifications.
 
-## Approach
+## Dataset
+
+To train our machine learning models and validate the metrics we use an augmented DPVSA Dataset version. We used rotations between -11 and +11 degrees, horizontal flip, Hue between -37 and +37 degrees, brightness between -34% and +34%, exposure between -18% and +18%, blur up to 1px.
+
+The original dataset is divided into different classes: ball, player_team_1, player_team_2, goalkeeper_team_1, goalkeeper_team_2, referee and outsider.To feed our model we replaced few base classes into a small subset. Our preprocessed dataset is splitted into ball, player, referee and outsider.
+
+The following images are sample from the DPVSA dataset.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/49798588/138783943-ba512321-8fdb-44a7-bbf4-e99cd1da4a66.jpeg" width="80%">
+</p>
 
 We divide the task into 2 different segments: object detection (including players, ball, referees and outsiders) and players clustering. First, we preprocess the dataset to obtain the data to train the model. After that, loading [YOLOv5s](https://github.com/ultralytics/yolov5) model and training it from scratch, using the dataset classes mentioned in the last section. We perform object detection using the model to get all the bounding boxes predictions and the confidence score for each class. 
 

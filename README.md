@@ -11,6 +11,15 @@ The team is formed by CS undergraduate students at Federal University Of Rio Gra
 In this project we have four main goals: team recognition, ball tracking, referee tracking and player tracking. For this task, we use classic computer vision techniques and machine learning.
 
 ## Running the model
+The develpment process was using the Google Colab's environment. Therefore, our recommendations are to run the code using a Python Notebook inside the Colab's environment through the following link: 
+
+<p align="center">
+  <a href="https://colab.research.google.com/drive/18fpSzTw_Rp3z_EzOJbENmjwo9UXhrI7v?usp=sharing">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a>
+</p>
+
+Using the link above you can read and execute the code, but if you want to run some tests or edit the code, you should copy the colab notebook to you own environment, for example Google Drive. Inside the Colab's envirment you can find other tips and specifications.
 
 ## Approach
 

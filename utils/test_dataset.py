@@ -21,7 +21,7 @@ def test_dataset(train_path, val_path, class_to_id, class_to_color):
 
 
     #waits for user to press any key 
-    #(this is necessary to avoid Python kernel form crashing)
+    #(this is necessary to avoid Python kernel from crashing)
     cv2.waitKey(0) 
       
     #closing all open windows 

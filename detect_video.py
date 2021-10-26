@@ -16,12 +16,21 @@ class_to_color = {'ball': (255, 0, 255),
                'referee': (0, 255, 0),
                'outsider': (0, 204, 204)}
 
+class_to_id = {'ball': 0,
+               'player_team_1': 1,
+               'player_team_2': 2,
+               'goalkeeper_team_1': 3,
+               'goalkeeper_team_2': 4,
+               'referee': 5,
+               'outsider': 6}
+
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=str, help='input video path', required=True)
-    parser.add_argument('--output', default = 'output_video.mp4', type=str, help='output video path')
+    parser.add_argument('--output_video', default = 'output_video.mp4', type=str, help='output video path')
+    parser.add_argument('--output_bboxes', default = './resuts/', type=str, help='output bboxes directory path')
     parser.add_argument('--yolo_repo', default='./yolov5', type=str, help='yolov5 repository path')
-    parser.add_argument('--model_weights', default='./weights/dpvsa_detector.pt', type=str, help='output video path')
+    parser.add_argument('--model_weights', default='./weights/dpvsa_detector_1080.pt', type=str, help='output video path')
     parser.add_argument('--imsz', default=640, type=int, help='model image input size')
 
     args = parser.parse_args()
@@ -40,8 +49,8 @@ def detect_video(args=None):
   height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
   fps    = video.get(cv2.CAP_PROP_FPS)
 
-  print("writing video output to {}".format(args.output))
-  video_writer = cv2.VideoWriter(args.output, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+  print("writing video output to {}".format(args.output_video))
+  video_writer = cv2.VideoWriter(args.output_video, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
   # Loading pytorch object detector model
   print("loading model weights from {}".format(args.model_weights))
@@ -97,8 +106,10 @@ def detect_video(args=None):
       if bbox['name'] == 'person' or bbox['name'] == 'player':
         if bbox['kmeans_result'] == 0:
           bbox['name'] = 'player_team_1'
+          bboxes.at[idx, 'name'] = 'player_team_1'
         if bbox['kmeans_result'] == 1:
           bbox['name'] = 'player_team_2'
+          bboxes.at[idx, 'name'] = 'player_team_2'
 
       x1, x2, y1, y2 = int(bbox['xmin']), int(bbox['xmax']), int(bbox['ymin']), int(bbox['ymax'])
       cv2.rectangle(frame, (x1,y1), (x2,y2), class_to_color[bbox['name']], thickness=2, lineType=cv2.LINE_AA)
@@ -108,8 +119,14 @@ def detect_video(args=None):
     # Writing frame
     video_writer.write(frame)
 
+    # Writing frame bboxes results
+    if not os.path.isdir(args.output_bboxes):
+      os.mkdir(args.output_bboxes)
+    frame_results = np.array([[bbox['xmin'], bbox['ymin'], bbox['xmax'], bbox['ymax'], bbox['confidence'], class_to_id[bbox['name']]] for idx, bbox in bboxes.iterrows()])
+    np.save(os.path.join(args.output_bboxes, 'result_frame_{}'.format(i+1)), frame_results)
+
   # After processing all frames, releasing video objects
-  print("Done! Output video saved to {}".format(args.output))
+  print("Done! Output video saved to {}".format(args.output_video))
   
   video.release()
   video_writer.release()

@@ -14,7 +14,7 @@ In this project we have four main goals: team recognition, ball tracking, refere
 The develpment process was using the Google Colab's environment. Therefore, our recommendations are to run the code using a Python Notebook inside the Colab's environment through the following link: 
 
 <p align="center">
-  <a href="https://colab.research.google.com/drive/18fpSzTw_Rp3z_EzOJbENmjwo9UXhrI7v?usp=sharing">
+  <a href="https://colab.research.google.com/drive/1VZSvRIhv92OTVbbXkE3epStbivIo8D_F?usp=sharing">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
   </a>
 </p>

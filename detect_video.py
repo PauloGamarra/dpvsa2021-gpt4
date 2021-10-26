@@ -31,7 +31,7 @@ def parse_opt():
     parser.add_argument('--output_bboxes', default = './results/', type=str, help='output bboxes directory path')
     parser.add_argument('--yolo_repo', default='./yolov5', type=str, help='yolov5 repository path')
     parser.add_argument('--model_weights', default='./weights/dpvsa_detector_1080.pt', type=str, help='output video path')
-    parser.add_argument('--imsz', default=640, type=int, help='model image input size')
+    parser.add_argument('--imsz', default=1080, type=int, help='model image input size')
 
     args = parser.parse_args()
     
